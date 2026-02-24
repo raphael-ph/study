@@ -1,85 +1,79 @@
+// Methods are similar to functions: We declare them with the fn keyword and a name, they can have parameters and a return value, 
+// and they contain some code that’s run when the method is called from somewhere else. Unlike functions, methods are defined within the context of a struct 
+// (or an enum or a trait object, which we cover in Chapter 6 and Chapter 18, respectively), and their first parameter is always self, 
+// which represents the instance of the struct the method is being called on.
+
 #[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
 }
 
+impl Rectangle { // impl = implementation
+    // Methods can take ownership of self, borrow self immutably, as we’ve done here, or borrow self mutably, just as they can any other parameter.
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn perimeter(&self) -> u32 {
+        2*self.width + 2*self.height
+    }
+
+    fn width(&self) -> bool {
+        self.width > 0
+    }
+
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size
+        }
+    }
+}
+
 fn main() {
-    let scale = 2;
     let rect1 = Rectangle {
-        // We can put dbg! around the expression 30 * scale and, because dbg! returns ownership of the expression’s value, 
-        // the width field will get the same value as if we didn’t have the dbg! call there.
-        width: dbg!(30 * scale),
+        width: 10,
         height: 50,
     };
 
-    dbg!(&rect1);
+    let rect2 = Rectangle {
+        width: 5,
+        height: 30,
+    };
+
+    let sq = Rectangle::square(3); // To call this associated function, we use the :: syntax with the struct name
+
+    println!("Our square here: {sq:#?}");
+
+    println!(
+        "The area of the rectangle is {} square pixels",
+        rect1.area()
+    );
+    println!(
+        "The perimeter of the rectangle is {} pixels",
+        rect1.perimeter()
+    );
+
+    if rect1.can_hold(&rect2) {
+        println!("Rectangle 1 can hold Rectangle 2");
+    } else {
+        println!("Rectangle 2 cannot be held by Rectangle 1");
+    }
+
+    if rect1.width() && rect1.width != 10 {
+        println!(
+            "The rectangle has a nonzero width. The value is: {}",
+            rect1.width,
+        );
+    } else if rect1.width == 10 {
+        println!("The rectangle width is equal to 10.");
+
+    } else {
+        println!("The rectangle cannot exist!");
+    }
 }
-
-// #[derive(Debug)] // if not here, compile error!!!! -> `Rectangle` cannot be formatted using `{:?}` because it doesn't implement `Debug`
-// struct Rectangle {
-//     width: u32,
-//     height: u32,
-// }
-
-// fn main() {
-//     let rect1 = Rectangle {
-//         width: 30,
-//         height: 50,
-//     };
-
-//     // println!("rect1 is {rect1}"); // compile error!!!! -> `Rectangle` cannot be formatted with the default formatter
-//     println!("rect1 is {rect1:#?}");  
-// }
-
-// // refactorinbg with structs
-// struct Rectangle {
-//     width: u32, 
-//     height: u32,
-// }
-
-// fn main() {
-//     let rect1 = Rectangle {
-//         width: 30,
-//         height: 50,
-//     };
-
-//     println!(
-//         "The area of the rectangle is {} square pixels.",
-//         area(&rect1)
-//     );
-
-// }
-
-// fn area(rectangle: &Rectangle) -> u32 { // is better for functions to borrow than to own
-//     rectangle.width * rectangle.height
-// }
-
-// // using tuple to make it more readable
-// fn main() {
-//     let rect1: (u32, u32) = (30, 50);
-
-//     println!(
-//         "The area of the rectangle is {} square pixels.",
-//         area(rect1)
-//     );
-// }
-    
-// fn area(dimensions: (u32, u32)) -> u32 {
-//         dimensions.0 * dimensions.1
-//     }
-
-
-// fn main() {
-//     let width1: u32 = 30;
-//     let height1: u32 = 50;
-
-//     println!(
-//         "The area of the rectangle is {} square pixels.",
-//         area(width1, height1)
-//     );
-// }
-
-// fn area(width: u32, height: u32) -> u32 {
-//     width * height
-// }
