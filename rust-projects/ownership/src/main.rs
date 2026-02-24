@@ -1,4 +1,5 @@
 mod references_borrowing;
+mod slice_type;
 
 fn main() {
     // first_example()
@@ -11,12 +12,39 @@ fn main() {
     // eight_example()
     // ninth_example()
     // tenth_example()
-    eleventh_example()
+    // eleventh_example()
+    // twelveth_example()
+    // thirteenth_example()
+    fourteenth_example()
 }
 
-fn eleventh_example() {
-    let reference_to_nothing = references_borrowing::dangle();
+fn fourteenth_example() {
+    let s = String::from("Artificial Intelligence is the new form of human cognition");
+    
+    let first_word = slice_type::first_word(&s);
+    println!("{first_word}");
 }
+
+fn thirteenth_example() {
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+
+    println!("first word: {hello}");
+    println!("second word: {world}");
+}
+
+fn twelveth_example() {
+    let sentence = String::from("Raphael, how are you doing bro?");
+    let number = slice_type::first_word(&sentence);
+
+    println!("{number}");
+}
+
+// fn eleventh_example() {
+//     let reference_to_nothing = references_borrowing::dangle();
+// }
 
 fn tenth_example() {
     references_borrowing::combining_mutability();

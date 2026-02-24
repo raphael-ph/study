@@ -1,11 +1,11 @@
-pub fn dangle() -> &String { // dangle returns a reference to a String
-    // this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+// pub fn dangle() -> &String { // dangle returns a reference to a String
+//     // this function's return type contains a borrowed value, but there is no value for it to be borrowed from
 
-    let s = String::from("hello"); // s is a new String
+//     let s = String::from("hello"); // s is a new String
 
-    &s // we return a reference to the String, s
-} // Here, s goes out of scope and is dropped, so its memory goes away.
-  // Danger!
+//     &s // we return a reference to the String, s
+// } // Here, s goes out of scope and is dropped, so its memory goes away.
+//   // Danger!
 
 pub fn combining_mutability() {
     let mut s = String::from("hello");
