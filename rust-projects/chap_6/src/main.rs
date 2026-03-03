@@ -1,20 +1,45 @@
-// The Option Enum
+
+// using match for control flow
 fn main() {
-    // The type of some_number is Option<i32>. The type of some_char is Option<char>, which is a different type. 
-    // Rust can infer these types because we’ve specified a value inside the Some variant. For absent_number, 
-    // Rust requires us to annotate the overall Option type: The compiler can’t infer the type that the corresponding Some variant will hold by looking only at a None value. 
-    // Here, we tell Rust that we mean for absent_number to be of type Option<i32>.
-    // let some_number = Some(5);
-    // let some_char = Some('e');
+    enum Coin {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter,
+    }
 
-    // let absent_number: Option<i32> = None;
-
-    let a: Option<i8> = Some(2);
-    let b: Option<i8> = Some(4);
-
-    let sum = a + b;
-    println!("{sum}");
+    impl Coin {
+        fn value_in_cents(&self) -> u8 {
+            match self {
+                Coin::Penny => {
+                    println!("Lucky penny");
+                    1
+                },
+                Coin::Nickel => 5,
+                Coin::Dime => 10,
+                Coin::Quarter => 25,
+            }
+        }
+    }
+    println!("A Penny is worth {} cent", Coin::Penny.value_in_cents());
 }
+
+// The Option Enum
+// fn main() {
+//     // The type of some_number is Option<i32>. The type of some_char is Option<char>, which is a different type. 
+//     // Rust can infer these types because we’ve specified a value inside the Some variant. For absent_number, 
+//     // Rust requires us to annotate the overall Option type: The compiler can’t infer the type that the corresponding Some variant will hold by looking only at a None value. 
+//     // Here, we tell Rust that we mean for absent_number to be of type Option<i32>.
+//     // let some_number = Some(5);
+//     // let some_char = Some('e');
+
+//     // let absent_number: Option<i32> = None;
+
+//     let a: Option<i8> = Some(2);
+//     let b: Option<i8> = Some(4);
+
+//     // let sum = a + b; // compile error -> Cannot perform operations with Option<T>. Got to convert to T.
+// }
 
 // new example with enum and different types
 // fn main() {
