@@ -1,28 +1,53 @@
-
-// using match for control flow
 fn main() {
-    enum Coin {
-        Penny,
-        Nickel,
-        Dime,
-        Quarter,
-    }
-
-    impl Coin {
-        fn value_in_cents(&self) -> u8 {
-            match self {
-                Coin::Penny => {
-                    println!("Lucky penny");
-                    1
-                },
-                Coin::Nickel => 5,
-                Coin::Dime => 10,
-                Coin::Quarter => 25,
-            }
+    fn plus_one(x: Option<i32>) -> Option<i32> {
+        match x {
+            None => None,
+            Some(i) => Some(i + 1),
         }
     }
-    println!("A Penny is worth {} cent", Coin::Penny.value_in_cents());
+
+    let five: Option<i32> = Some(5);
+    let six: Option<i32> = plus_one(five);
+    let none: Option<i32> = plus_one(None);
+
+    println!("Five is worth {five:?}");
+    println!("Six is worth {six:?}");
+    println!("None is worth {none:?}");
 }
+
+
+// using match for control flow
+// fn main() {
+//     #[derive(Debug)]
+//     enum UsState {
+//         Alabama,
+//         Alaska,
+//     }
+//     enum Coin {
+//         Penny,
+//         Nickel,
+//         Dime,
+//         Quarter(UsState),
+//     }
+
+//     impl Coin {
+//         fn value_in_cents(&self) -> u8 {
+//             match self {
+//                 Coin::Penny => {
+//                     println!("Lucky penny!");
+//                     1
+//                 },
+//                 Coin::Nickel => 5,
+//                 Coin::Dime => 10,
+//                 Coin::Quarter(state) => {
+//                     println!("State quarter from {state:?}!");
+//                     25
+//                 },
+//             }
+//         }
+//     }
+//     println!("A Quarter is worth {} cent", Coin::Quarter(UsState::Alabama).value_in_cents());
+// }
 
 // The Option Enum
 // fn main() {
