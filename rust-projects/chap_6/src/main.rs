@@ -1,19 +1,80 @@
+// if ... let pattern
 fn main() {
-    fn plus_one(x: Option<i32>) -> Option<i32> {
-        match x {
-            None => None,
-            Some(i) => Some(i + 1),
+    //you can think of if let as syntax sugar for a match that runs code when the value matches one pattern and then ignores all other values.
+    #[derive(Debug)]
+    enum UsState {
+        Alabama,
+        Alaska,
+    }
+
+    impl UsState {
+        fn existed_in(&self, year: u16) -> bool {
+            match self {
+                UsState::Alabama => year >= 1819,
+                UsState::Alaska => year >= 1959,
+                // -- snip --
+            }
         }
     }
 
-    let five: Option<i32> = Some(5);
-    let six: Option<i32> = plus_one(five);
-    let none: Option<i32> = plus_one(None);
+    enum Coin {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter(UsState),
+    }
 
-    println!("Five is worth {five:?}");
-    println!("Six is worth {six:?}");
-    println!("None is worth {none:?}");
+    let coin = Coin::Quarter(UsState::Alabama);
+    let second_coin = Coin::Penny;
+    let mut count = 0;
+    match &coin {
+        Coin::Quarter(state) => println!("State quarter from {state:?}!"),
+        _ => count += 1,
+    }
+
+    if let Coin::Quarter(state) = &coin {
+        println!("State quarter from {state:?}!");
+    } else {
+        count += 1;
+    }
+
+    fn describe_state_quarter(coin: Coin) -> Option<String> {
+        let Coin::Quarter(state) = coin else {
+            return None;
+        };
+
+        if state.existed_in(1900) {
+            Some(format!("{state:?} is pretty old, for America!"))
+        } else {
+            Some(format!("{state:?} is relatively new."))
+        }
+    }
+
+    let description: Option<String> = describe_state_quarter(coin);
+    let second_description : Option<String> = describe_state_quarter(second_coin);
+    println!("{}", description.unwrap());
+    println!("{:?}", second_description);
+
+
+
 }
+
+// fn main() {
+//     fn plus_one(x: Option<i32>) -> Option<i32> {
+//         match x {
+//             None => None,
+//             Some(i) => Some(i + 1),
+//         }
+//     }
+
+//     let five: Option<i32> = Some(5);
+//     let six: Option<i32> = plus_one(five);
+//     let none: Option<i32> = plus_one(None);
+
+//     println!("Five is worth {five:?}");
+//     println!("Six is worth {six:?}");
+//     println!("None is worth {none:?}");
+// }
 
 
 // using match for control flow
